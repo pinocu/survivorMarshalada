@@ -36,8 +36,23 @@ function elegirAlAzar(lista, cantidad) {
   return copia.slice(0, cantidad);
 }
 
-function hacerSorteo(ligasIncluidas) {
-  const excluidos = obtenerExcluidos();
+function calcularDisponibles(equiposBombo, excluidosSemana, excluidosExtra, cantidad) {
+  // 1. Aplicar ambas exclusiones (semana anterior + jornada 1 si aplica)
+  let disponibles = equiposBombo.filter((e) => !excluidosSemana.has(e) && !excluidosExtra.has(e));
+  if (disponibles.length >= cantidad) return disponibles;
+
+  // 2. Si no alcanza, se relaja solo la exclusión de la semana anterior,
+  //    manteniendo firme la de "omitir jornada 1" (es una elección explícita).
+  disponibles = equiposBombo.filter((e) => !excluidosExtra.has(e));
+  if (disponibles.length >= cantidad) return disponibles;
+
+  // 3. Última salvaguarda: usar el bombo completo para que el sorteo no falle.
+  return equiposBombo;
+}
+
+function hacerSorteo(ligasIncluidas, excluidosExtra) {
+  const excluidosSemana = obtenerExcluidos();
+  const extra = excluidosExtra || new Set();
   const resultado = {};
   ligasIncluidas.forEach((liga) => {
     const bombosLiga = LIGAS[liga];
@@ -45,10 +60,7 @@ function hacerSorteo(ligasIncluidas) {
     ORDEN_BOMBOS.forEach((bombo) => {
       const cantidad = CANTIDAD_POR_BOMBO[bombo];
       const equiposBombo = bombosLiga[bombo];
-      let disponibles = equiposBombo.filter((e) => !excluidos.has(e));
-      // Salvaguarda: si excluir la semana pasada deja menos equipos de los
-      // necesarios, se usa el bombo completo para que el sorteo no falle.
-      if (disponibles.length < cantidad) disponibles = equiposBombo;
+      const disponibles = calcularDisponibles(equiposBombo, excluidosSemana, extra, cantidad);
       resultado[liga][bombo] = elegirAlAzar(disponibles, cantidad);
     });
   });
@@ -81,8 +93,8 @@ function slugArchivo(texto) {
   return slug || "sorteo";
 }
 
-function guardarNuevoSorteo(titulo, ligasIncluidas) {
-  const resultado = hacerSorteo(ligasIncluidas);
+function guardarNuevoSorteo(titulo, ligasIncluidas, excluidosExtra) {
+  const resultado = hacerSorteo(ligasIncluidas, excluidosExtra);
   const filas = aplanarResultado(resultado);
   const historial = obtenerHistorial();
   const id = historial.length ? historial[historial.length - 1].id + 1 : 1;
