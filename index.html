@@ -11,7 +11,7 @@
   <div class="container">
     <div class="marca">
       <img src="img/logo.png" alt="La Marshalada" class="marca-logo">
-      <h1>SURVIVOR <span>SURVIVOR LA MARSHALADA</span></h1>
+      <h1>SURVIVOR <span>LA MARSHALADA</span></h1>
     </div>
     <p class="subtitle">Marca las ligas que entran esta semana y lanza el sorteo</p>
 
@@ -23,7 +23,13 @@
 
       <div id="ligas-contenedor"></div>
 
-      <button type="submit" class="btn-primary">🎲 Lanzar sorteo</button>
+      <div class="lanzar-fila">
+        <label class="omitir-check">
+          <input type="checkbox" id="omitir-jornada1">
+          <span>Omitir jornada 1</span>
+        </label>
+        <button type="submit" class="btn-primary">🎲 Lanzar sorteo</button>
+      </div>
     </form>
 
     <a href="historial.html" class="nav-link">Ver historial de sorteos →</a>
@@ -43,7 +49,9 @@
         alert("Selecciona al menos una liga antes de lanzar el sorteo.");
         return;
       }
-      const entrada = guardarNuevoSorteo(titulo, ligasSeleccionadas);
+      const omitirJornada1 = document.getElementById("omitir-jornada1").checked;
+      const excluidosExtra = omitirJornada1 ? JORNADA_1_EXCLUIDOS : new Set();
+      const entrada = guardarNuevoSorteo(titulo, ligasSeleccionadas, excluidosExtra);
       window.location.href = "resultado.html?id=" + entrada.id;
     });
   </script>
