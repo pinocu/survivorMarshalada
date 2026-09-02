@@ -38,3 +38,12 @@ const ASCENDIDOS = new Set([
 const CANTIDAD_POR_BOMBO = { alta: 1, media: 2, baja: 2 };
 const ORDEN_BOMBOS = ["alta", "media", "baja"];
 const NOMBRE_BOMBO = { alta: "ALTA", media: "MEDIA", baja: "BAJA" };
+
+// Equipos que no jugaron/no cuentan en la jornada 1: si se marca el checkbox
+// correspondiente en la página principal, estos equipos no pueden salir en ese sorteo.
+const JORNADA_1_EXCLUIDOS = new Set([
+  "Villarreal", "Rayo Vallecano", "Sevilla", "Levante", "Osasuna",
+  "Aston Villa", "Sunderland", "Chelsea", "Coventry City", "Tottenham Hotspur",
+  "Inter", "Atalanta", "Cagliari", "Genoa", "Monza",
+  "Bayern Múnich", "Eintracht Frankfurt", "Hoffenheim", "1. FC Köln", "Hamburger SV",
+]);
