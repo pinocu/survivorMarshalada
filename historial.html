@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SURVIVOR LA MARSHALADA</title>
+  <link rel="icon" href="img/logo.png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="marca">
+      <img src="img/logo.png" alt="La Marshalada" class="marca-logo">
+      <h1>SURVIVOR <span>LA MARSHALADA</span></h1>
+    </div>
+    <p class="subtitle">Historial de sorteos (guardado en este navegador)</p>
+
+    <div id="historial-contenedor"></div>
+
+    <a href="index.html" class="nav-link">← Volver a lanzar un sorteo</a>
+  </div>
+
+  <script src="js/datos.js"></script>
+  <script src="js/sorteo.js"></script>
+  <script src="js/render.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="js/captura.js"></script>
+  <script>
+    function pintarHistorial() {
+      const contenedor = document.getElementById("historial-contenedor");
+      const historial = obtenerHistorial().slice().reverse();
+
+      if (historial.length === 0) {
+        contenedor.innerHTML = '<div class="card"><div class="empty-state">Todavía no hay sorteos guardados.</div></div>';
+        return;
+      }
+
+      contenedor.innerHTML = "";
+      historial.forEach((entrada, indice) => {
+        const idTabla = "tabla-historial-" + entrada.id;
+        const card = document.createElement("div");
+        card.className = "card historial-item";
+        card.innerHTML = `
+          <details ${indice === 0 ? "open" : ""}>
+            <summary>
+              <span class="historial-titulo">${entrada.titulo}</span>
+              <span class="historial-fecha">${entrada.fecha}</span>
+            </summary>
+            <div class="historial-detalle">
+              <div class="tabla-toolbar">
+                <span class="tabla-toolbar-titulo">${entrada.titulo}</span>
+                <button type="button" class="camara-btn" title="Guardar tabla como imagen">📷</button>
+              </div>
+              ${construirTablaResultado(entrada.filas, idTabla, false)}
+              <button type="button" class="delete-btn">✕ Borrar este sorteo</button>
+            </div>
+          </details>
+        `;
+
+        card.querySelector(".camara-btn").addEventListener("click", function () {
+          capturarComoImagen(idTabla, slugArchivo(entrada.titulo) + "-" + entrada.id, this);
+        });
+
+        card.querySelector(".delete-btn").addEventListener("click", function () {
+          if (confirm("¿Borrar este sorteo del historial?")) {
+            borrarSorteo(entrada.id);
+            pintarHistorial();
+          }
+        });
+
+        contenedor.appendChild(card);
+      });
+    }
+
+    pintarHistorial();
+  </script>
+</body>
+</html>

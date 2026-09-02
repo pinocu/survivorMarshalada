@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SURVIVOR LA MARSHALADA</title>
+  <link rel="icon" href="img/logo.png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="marca">
+      <img src="img/logo.png" alt="La Marshalada" class="marca-logo">
+      <h1>SURVIVOR <span>LA MARSHALADA</span></h1>
+    </div>
+    <p class="subtitle">Marca las ligas que entran esta semana y lanza el sorteo</p>
+
+    <form id="form-sorteo">
+      <div class="card titulo-card">
+        <label for="titulo">Título del sorteo (opcional)</label>
+        <input type="text" id="titulo" name="titulo" placeholder="Ej: Sorteo semana 12">
+      </div>
+
+      <div id="ligas-contenedor"></div>
+
+      <button type="submit" class="btn-primary">🎲 Lanzar sorteo</button>
+    </form>
+
+    <a href="historial.html" class="nav-link">Ver historial de sorteos →</a>
+  </div>
+
+  <script src="js/datos.js"></script>
+  <script src="js/sorteo.js"></script>
+  <script src="js/render.js"></script>
+  <script>
+    pintarLigas("ligas-contenedor");
+
+    document.getElementById("form-sorteo").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const titulo = document.getElementById("titulo").value.trim();
+      const ligasSeleccionadas = Array.from(document.querySelectorAll(".liga-checkbox:checked")).map((cb) => cb.value);
+      if (ligasSeleccionadas.length === 0) {
+        alert("Selecciona al menos una liga antes de lanzar el sorteo.");
+        return;
+      }
+      const entrada = guardarNuevoSorteo(titulo, ligasSeleccionadas);
+      window.location.href = "resultado.html?id=" + entrada.id;
+    });
+  </script>
+</body>
+</html>

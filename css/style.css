@@ -1,0 +1,432 @@
+:root {
+  --bg: #14151a;
+  --card: #1e2028;
+  --accent: #ffb347;
+  --accent-2: #ff6b6b;
+  --text: #f1f1f3;
+  --text-dim: #9a9ba5;
+  --border: #2c2e38;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: radial-gradient(circle at top, #1c1e26, var(--bg) 60%);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 16px;
+}
+
+.container {
+  width: 100%;
+  max-width: 560px;
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 4px;
+}
+
+.marca-logo {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.marca h1 {
+  margin: 0;
+  font-size: 1.6rem;
+  letter-spacing: 0.03em;
+  background: none;
+  -webkit-text-fill-color: initial;
+}
+
+.marca h1 span {
+  display: block;
+  font-size: 1.05rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: 0.06em;
+}
+
+@media (max-width: 480px) {
+  .marca { flex-direction: column; gap: 8px; }
+  .marca h1 { text-align: center; }
+}
+
+h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 4px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--text-dim);
+  margin-bottom: 28px;
+  font-size: 0.95rem;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+  margin-top: 18px;
+}
+
+label:first-child { margin-top: 0; }
+
+input[type="text"], textarea {
+  width: 100%;
+  background: #14151b;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  color: var(--text);
+  font-size: 0.95rem;
+  font-family: inherit;
+  resize: vertical;
+}
+
+textarea { min-height: 180px; line-height: 1.5; }
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.hint {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  margin-top: 6px;
+}
+
+button, .btn {
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
+  padding: 13px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.btn-primary {
+  width: 100%;
+  margin-top: 22px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  color: #1a1a1a;
+}
+
+.btn-primary:hover { filter: brightness(1.08); }
+
+.btn-secondary {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  margin-top: 12px;
+  width: 100%;
+}
+
+.btn-secondary:hover { border-color: var(--accent); }
+
+.nav-link {
+  display: block;
+  text-align: center;
+  margin-top: 18px;
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+.nav-link:hover { color: var(--accent); }
+
+/* Resultado */
+.ganador-box {
+  text-align: center;
+  padding: 30px 10px;
+}
+
+.trofeo { font-size: 3rem; margin-bottom: 6px; }
+
+.ganador-nombre {
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 6px 0 4px;
+  animation: pop 0.5s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.6); opacity: 0; }
+  70% { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+.total-participantes {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+
+/* Historial */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+th, td {
+  text-align: left;
+  padding: 10px 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+th { color: var(--text-dim); font-weight: 500; }
+
+.ganador-cell { color: var(--accent); font-weight: 600; }
+
+.empty-state {
+  text-align: center;
+  color: var(--text-dim);
+  padding: 30px 0;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.delete-btn:hover { color: var(--accent-2); }
+
+/* Ligas y bombos */
+.container { max-width: 720px; }
+
+.titulo-card { margin-bottom: 16px; }
+.titulo-card label { margin-top: 0; }
+
+.liga-card { margin-bottom: 16px; padding: 20px; }
+
+.liga-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  margin-bottom: 14px;
+}
+
+.liga-header input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.liga-nombre {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.resultado-liga-nombre { margin-bottom: 14px; }
+
+/* Tabla de bombos (página principal) */
+.bombos-tabla {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.85rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.bombos-tabla thead th {
+  padding: 10px 12px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-align: left;
+  color: #14151b;
+}
+
+.th-alta { background: linear-gradient(90deg, #ff8a8a, #ff6b6b); }
+.th-media { background: linear-gradient(90deg, #ffcf8f, #ffb347); }
+.th-baja { background: linear-gradient(90deg, #9fdcff, #6bc5ff); }
+
+.bombos-tabla td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+
+.bombos-tabla tbody tr:nth-child(odd) td { background: rgba(255, 255, 255, 0.02); }
+.bombos-tabla tbody tr:hover td { background: rgba(255, 255, 255, 0.05); }
+
+.celda-alta { border-left: 3px solid #ff6b6b; }
+.celda-media { border-left: 3px solid #ffb347; }
+.celda-baja { border-left: 3px solid #6bc5ff; }
+
+@media (max-width: 560px) {
+  .bombos-tabla { font-size: 0.76rem; }
+  .bombos-tabla td, .bombos-tabla thead th { padding: 7px 8px; }
+}
+
+.asc-badge {
+  color: #6bc97a;
+  font-size: 0.7rem;
+}
+
+.liga-header { align-items: center; }
+.equipos-lista li { display: flex; align-items: center; gap: 8px; }
+
+/* Tabla de resultados */
+.tabla-card { padding: 0; overflow: hidden; margin-bottom: 20px; }
+
+.tabla-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.tabla-toolbar-titulo {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.camara-btn {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: #14151b;
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.camara-btn:hover { background: var(--accent); color: #1a1a1a; }
+.camara-btn:active { transform: scale(0.93); }
+.camara-btn:disabled { opacity: 0.6; cursor: default; }
+
+
+
+.resultado-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.resultado-tabla thead th {
+  text-align: left;
+  padding: 12px 14px;
+  background: #181a22;
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+}
+
+.resultado-tabla td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+.resultado-tabla tr:last-child td { border-bottom: none; }
+
+.tabla-liga-cell {
+  font-weight: 700;
+  white-space: nowrap;
+  border-right: 1px solid var(--border);
+}
+
+.tabla-equipo-cell { color: var(--text); }
+
+.fila-alta { background: rgba(255, 107, 107, 0.06); }
+.fila-media { background: rgba(255, 179, 71, 0.05); }
+.fila-baja { background: rgba(107, 197, 255, 0.05); }
+
+.bombo-pill {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.bombo-pill-alta { background: rgba(255, 107, 107, 0.18); color: #ff8a8a; }
+.bombo-pill-media { background: rgba(255, 179, 71, 0.18); color: #ffc670; }
+.bombo-pill-baja { background: rgba(107, 197, 255, 0.18); color: #8fd3ff; }
+
+/* Historial plegable */
+.historial-item { margin-bottom: 12px; padding: 16px 20px; }
+
+.historial-item summary {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+}
+.historial-item summary::-webkit-details-marker { display: none; }
+
+.historial-titulo { font-weight: 600; }
+.historial-fecha { color: var(--text-dim); font-size: 0.82rem; }
+
+.historial-detalle {
+  margin-top: 14px;
+  padding-top: 0;
+  border-top: 1px solid var(--border);
+}
+
+.historial-detalle .tabla-toolbar { padding: 14px 4px; }
+.historial-detalle .resultado-tabla { margin-bottom: 12px; }
+.historial-detalle .delete-btn { margin: 0 4px; }
+
+.historial-liga { margin-bottom: 10px; }
+.historial-liga-nombre { font-weight: 700; font-size: 0.9rem; margin-bottom: 2px; }
+.historial-equipos { font-size: 0.82rem; color: var(--text-dim); }
+.historial-bombo-label { color: var(--text); font-weight: 600; margin-right: 2px; }

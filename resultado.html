@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SURVIVOR LA MARSHALADA</title>
+  <link rel="icon" href="img/logo.png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="marca">
+      <img src="img/logo.png" alt="La Marshalada" class="marca-logo">
+      <h1>SURVIVOR <span>LA MARSHALADA</span></h1>
+    </div>
+    <p class="subtitle" id="subtitulo"></p>
+
+    <div class="card tabla-card">
+      <div class="tabla-toolbar">
+        <span class="tabla-toolbar-titulo" id="toolbar-titulo"></span>
+        <button type="button" class="camara-btn" id="btn-camara" title="Guardar tabla como imagen">📷</button>
+      </div>
+      <div id="tabla-contenedor"></div>
+    </div>
+
+    <a href="index.html" class="btn btn-primary">🎲 Hacer otro sorteo</a>
+    <a href="historial.html" class="btn btn-secondary">Ver historial</a>
+  </div>
+
+  <script src="js/datos.js"></script>
+  <script src="js/sorteo.js"></script>
+  <script src="js/render.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="js/captura.js"></script>
+  <script>
+    const parametros = new URLSearchParams(window.location.search);
+    const idBuscado = parseInt(parametros.get("id"), 10);
+    const historial = obtenerHistorial();
+    const entrada = historial.find((e) => e.id === idBuscado) || historial[historial.length - 1];
+
+    if (entrada) {
+      document.getElementById("subtitulo").textContent = entrada.titulo;
+      document.getElementById("toolbar-titulo").textContent = entrada.titulo;
+      document.getElementById("tabla-contenedor").innerHTML =
+        construirTablaResultado(entrada.filas, "tabla-resultado", true);
+      document.getElementById("btn-camara").addEventListener("click", function () {
+        capturarComoImagen("tabla-resultado", slugArchivo(entrada.titulo) + "-" + entrada.id, this);
+      });
+    } else {
+      document.getElementById("subtitulo").textContent = "Sorteo no encontrado";
+      document.getElementById("tabla-contenedor").innerHTML =
+        '<div class="empty-state">No se encontró este sorteo en este navegador. Prueba a lanzar uno nuevo desde el inicio.</div>';
+      document.getElementById("btn-camara").style.display = "none";
+    }
+  </script>
+</body>
+</html>
