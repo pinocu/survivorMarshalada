@@ -261,12 +261,20 @@ th { color: var(--text-dim); font-weight: 500; }
 /* Tabla de bombos (página principal) */
 .bombos-tabla {
   width: 100%;
+  table-layout: fixed;
   border-collapse: separate;
   border-spacing: 0;
   font-size: 0.85rem;
   border-radius: 10px;
   overflow: hidden;
   border: 1px solid var(--border);
+}
+
+.bombos-tabla th,
+.bombos-tabla td {
+  width: 33.333%;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .bombos-tabla thead th {
